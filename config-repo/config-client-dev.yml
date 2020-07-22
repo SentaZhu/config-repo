@@ -1,2 +1,2 @@
 senta:
-  hello: dev update 
+  hello: dev update --after actuator
