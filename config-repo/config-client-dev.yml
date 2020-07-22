@@ -1,2 +1,2 @@
 senta:
-  hello: dev update --add kafka 
+  hello: dev --add kafka 
