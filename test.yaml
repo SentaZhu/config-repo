@@ -1,28 +1,32 @@
 apiVersion: core.oam.dev/v1alpha2
 kind: Component
 metadata:
-  name: data-api-database
+  name: tracker-postgres-db
 spec:
   workload:
-    apiVersion: database.example.org/v1alpha1
-    kind: PostgreSQLInstance
+    apiVersion: core.oam.dev/v1alpha2
+    kind: ContainerizedWorkload
     metadata:
-      name: app-postgresql
+      name: db-workload
     spec:
-      parameters:
-        storageGB: 20
-      compositionSelector:
-        matchLabels:
-          guide: quickstart
+      containers:
+        - name: postgres
+          image: docker.io/postgres:9.6.17-alpine
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "dbpassword"
+            - name: POSTGRES_DB
+              value: "hackfest"
+          ports:
+            - name: postgres
+              containerPort: 5432
+              protocol: TCP
   parameters:
-  - name: database-secret
-    description: Secret to which to write PostgreSQL database connection details.
-    required: true
-    fieldPaths:
-    - spec.writeConnectionSecretToRef.name
-  - name: database-provider
-    description: |
-      Cloud provider that should be used to create a PostgreSQL database.
-      Either alibaba, aws, azure, or gcp.
-    fieldPaths:
-    - spec.compositionSelector.matchLabels.provider
+    - name: dbuser
+      ...
+    - name: dbpassword
+      ...
+    - name: database
+      ...
