@@ -15,18 +15,10 @@ spec:
           env:
             - name: POSTGRES_USER
               value: "postgres"
-            - name: POSTGRES_PASSWORD
-              value: "dbpassword"
-            - name: POSTGRES_DB
-              value: "hackfest"
+            ...
           ports:
-            - name: postgres
-              containerPort: 5432
-              protocol: TCP
+            ...
   parameters:
     - name: dbuser
       ...
-    - name: dbpassword
-      ...
-    - name: database
-      ...
+
