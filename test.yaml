@@ -1,0 +1,28 @@
+apiVersion: core.oam.dev/v1alpha2
+kind: Component
+metadata:
+  name: data-api-database
+spec:
+  workload:
+    apiVersion: database.example.org/v1alpha1
+    kind: PostgreSQLInstance
+    metadata:
+      name: app-postgresql
+    spec:
+      parameters:
+        storageGB: 20
+      compositionSelector:
+        matchLabels:
+          guide: quickstart
+  parameters:
+  - name: database-secret
+    description: Secret to which to write PostgreSQL database connection details.
+    required: true
+    fieldPaths:
+    - spec.writeConnectionSecretToRef.name
+  - name: database-provider
+    description: |
+      Cloud provider that should be used to create a PostgreSQL database.
+      Either alibaba, aws, azure, or gcp.
+    fieldPaths:
+    - spec.compositionSelector.matchLabels.provider
