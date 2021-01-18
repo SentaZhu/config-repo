@@ -1,24 +1,12 @@
 apiVersion: core.oam.dev/v1alpha2
-kind: Component
+kind: ApplicationConfiguration
 metadata:
-  name: tracker-postgres-db
+  name: service-tracker
 spec:
-  workload:
-    apiVersion: core.oam.dev/v1alpha2
-    kind: ContainerizedWorkload
-    metadata:
-      name: db-workload
-    spec:
-      containers:
-        - name: postgres
-          image: docker.io/postgres:9.6.17-alpine
-          env:
-            - name: POSTGRES_USER
-              value: "postgres"
-            ...
-          ports:
-            ...
-  parameters:
-    - name: dbuser
-      ...
-
+  components:
+    - componentName: data-api-database
+      parameterValues:
+        - name: database-secret
+          value: tracker-database-secret
+    - componentName: ...
+    ...
